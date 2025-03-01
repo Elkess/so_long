@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 10:11:20 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/01 09:07:49 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/01 18:28:28 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ void	char_position(char **map, char c, t_coordinates *coords)
 	coords->y = 0;
 	i = 0;
 	j = 0;
+
 	while (map[i])
 	{
 		j = 0;
@@ -223,19 +224,32 @@ void	parsing(char *filename, t_game *game)
 	// check_map_size(game);
 }
 
+void	fill_imgs(t_game *game, void *mlx)
+{
+	t_coordinates	coords;
+	char			*s;
+
+	if (open("textures/wall.xpm", O_RDONLY) < 0
+		|| open("textures/espace.xpm", O_RDONLY) < 0
+		|| open("textures/ball1.xpm", O_RDONLY) < 0
+		|| open("textures/blackhole.xpm", O_RDONLY) < 0
+		|| open("textures/player.xpm", O_RDONLY) < 0)
+		print_err("Invalid picture path name !!!");
+	game->w_img = mlx_xpm_file_to_image(mlx, "textures/wall.xpm", &coords.x, &coords.y);
+	game->c_img = mlx_xpm_file_to_image(mlx, "textures/ball1.xpm", &coords.x, & coords.y);
+	game->e_img = mlx_xpm_file_to_image(mlx, "textures/blackhole.xpm", &coords.x, & coords.y);
+	game->p_img = mlx_xpm_file_to_image(mlx, "textures/player.xpm", &coords.x, & coords.y);
+	game->s_img = mlx_xpm_file_to_image(mlx, "textures/espace.xpm", &coords.x, & coords.y);
+}
+
 void	put_imgs_to_win(void *mlx, void *mlx_win, t_game *game)
 {
 	size_t			i;
 	size_t			j;
-	t_coordinates	coords;
 
 	i = 0;
 	j = 0;
-	game->w_img = mlx_xpm_file_to_image(mlx, "img/wall.xpm", &coords.x, &coords.y);
-	game->c_img = mlx_xpm_file_to_image(mlx, "img/ball.xpm", &coords.x, & coords.y);
-	game->e_img = mlx_xpm_file_to_image(mlx, "img/exit1.xpm", &coords.x, & coords.y);
-	game->p_img = mlx_xpm_file_to_image(mlx, "img/player.xpm", &coords.x, & coords.y);
-	game->s_img = mlx_xpm_file_to_image(mlx, "img/espace.xpm", &coords.x, & coords.y);
+	fill_imgs(game, mlx);
 	while (game->map[i])
 	{
 		j = 0;
@@ -257,20 +271,70 @@ void	put_imgs_to_win(void *mlx, void *mlx_win, t_game *game)
 	}
 }
 
+int	key_press(int keycode, t_game *game)
+{
+	t_coordinates	*cords;
+
+	cords = malloc(sizeof(cords));
+	if (keycode == 124)
+	{
+		puts("sss");
+		char_position(game->map, 'P', cords);
+		game->map[cords->x][cords->y] = '0';
+		game->map[cords->x ][cords->y +1] = 'P';
+		put_imgs_to_win(game->mlxs.mlx, game->mlxs.mlx_win, game);
+
+	}
+	if (keycode == 123)
+	{
+		puts("sss");
+		char_position(game->map, 'P', cords);
+		game->map[cords->x][cords->y] = '0';
+		game->map[cords->x ][cords->y -1] = 'P';
+		put_imgs_to_win(game->mlxs.mlx, game->mlxs.mlx_win, game);
+
+	}
+	if (keycode == 125)
+	{
+		puts("sss");
+		char_position(game->map, 'P', cords);
+		game->map[cords->x][cords->y] = '0';
+		game->map[cords->x +1][cords->y] = 'P';
+		put_imgs_to_win(game->mlxs.mlx, game->mlxs.mlx_win, game);
+
+	}
+	if (keycode == 126)
+	{
+		puts("sss");
+		char_position(game->map, 'P', cords);
+		game->map[cords->x][cords->y] = '0';
+		game->map[cords->x -1][cords->y] = 'P';
+		put_imgs_to_win(game->mlxs.mlx, game->mlxs.mlx_win, game);
+
+	}
+	if (keycode == 53)
+	{
+		mlx_destroy_window(game->mlxs.mlx, game->mlxs.mlx_win);
+		exit(0);
+	}
+	printf("%d\n", keycode);
+	return(1);
+}
+
 int	main(int ac, char **av)
 {
 	t_game	*game;
-	void	*mlx;
-	void	*mlx_win;
+
 
 	if (ac == 2 && av[1][0])
 	{
 		game = malloc(sizeof(t_game));
 		parsing(av[1], game);
-		mlx = mlx_init();
-		mlx_win = mlx_new_window(mlx, game->win.width * 64, game->win.length * 64, "so_long");
-		put_imgs_to_win(mlx, mlx_win, game);
-		mlx_loop(mlx);
+		game->mlxs.mlx = mlx_init();
+		game->mlxs.mlx_win = mlx_new_window(game->mlxs.mlx, game->win.width * 64, game->win.length * 64, "so_long");
+		put_imgs_to_win(game->mlxs.mlx, game->mlxs.mlx_win, game);
+		mlx_key_hook(game->mlxs.mlx_win, key_press, game);
+		mlx_loop(game->mlxs.mlx);
 	}
 	else
 		exit(1);

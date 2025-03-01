@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 09:57:56 by melkess           #+#    #+#             */
-/*   Updated: 2025/02/28 14:35:38 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/01 17:01:41 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,16 @@ typedef struct s_windows
 	size_t	length;
 }	t_windows;
 
+typedef struct s_mlx
+{
+	void	*mlx;
+	void	*mlx_win;
+}	t_mlx;
+
 typedef struct s_game
 {
 	t_windows	win;
+	t_mlx		mlxs;
 	char	**map2;
 	char	**map;
 	void	*p_img;

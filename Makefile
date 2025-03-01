@@ -5,7 +5,8 @@ SRCS = so_long.c ft_strcmp.c ft_strrchr.c \
 
 OBJS = $(SRCS:.c=.o)
 CC = cc
-CFLAGS =
+CFLAGS = 
+#-fsanitize=address -g3
 # LIBS = -Lmlx -lmlx -lXext -lX11 -lm
 
 all: $(NAME)
