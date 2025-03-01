@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 09:57:56 by melkess           #+#    #+#             */
-/*   Updated: 2025/02/27 17:23:21 by melkess          ###   ########.fr       */
+/*   Updated: 2025/02/28 14:35:38 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,24 @@
 # include <fcntl.h>
 # include "get_next_line/get_next_line.h"
 
-typedef struct s_game
+typedef struct s_windows
 {
-	int		fd;
-	char	**map;
-	char	**map2;
 	size_t	width;
 	size_t	length;
-	size_t	char_counter;
+}	t_windows;
+
+typedef struct s_game
+{
+	t_windows	win;
+	char	**map2;
+	char	**map;
+	void	*p_img;
+	void	*e_img;
+	void	*c_img;
+	void	*w_img;
+	void	*s_img;
+	int		collectibles;
+	int		fd;
 }	t_game;
 
 typedef struct s_coordinates
@@ -38,11 +48,18 @@ typedef struct s_coordinates
 	int	y;
 }	t_coordinates;
 
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
+}			t_data;
+
 
 char	*ft_strrchr(const char *s, int c);
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_bzero(void *s, size_t n);
-void	ft_exit(int n);
-void	*ft_malloc(size_t	size);
 
 #endif
