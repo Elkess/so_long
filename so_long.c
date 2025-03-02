@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 10:11:20 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/01 18:28:28 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/02 22:30:52 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,50 +274,30 @@ void	put_imgs_to_win(void *mlx, void *mlx_win, t_game *game)
 int	key_press(int keycode, t_game *game)
 {
 	t_coordinates	*cords;
+	int				i;
+	int				j;
 
+	i = 0;
+	j = 0;
 	cords = malloc(sizeof(cords));
-	if (keycode == 124)
-	{
-		puts("sss");
-		char_position(game->map, 'P', cords);
+	char_position(game->map, 'P', cords);
+	j = (keycode == 124) * 1 + (keycode == 123) * -1;
+	i = (keycode == 125) * 1 + (keycode == 126) * -1;
+	// // if (
+	// 	(, game->win.width);
+	// 	// || 
+	// 	game->win.length - cords->x > 1
+	// 	// )
+	// // {
 		game->map[cords->x][cords->y] = '0';
-		game->map[cords->x ][cords->y +1] = 'P';
-		put_imgs_to_win(game->mlxs.mlx, game->mlxs.mlx_win, game);
-
-	}
-	if (keycode == 123)
-	{
-		puts("sss");
-		char_position(game->map, 'P', cords);
-		game->map[cords->x][cords->y] = '0';
-		game->map[cords->x ][cords->y -1] = 'P';
-		put_imgs_to_win(game->mlxs.mlx, game->mlxs.mlx_win, game);
-
-	}
-	if (keycode == 125)
-	{
-		puts("sss");
-		char_position(game->map, 'P', cords);
-		game->map[cords->x][cords->y] = '0';
-		game->map[cords->x +1][cords->y] = 'P';
-		put_imgs_to_win(game->mlxs.mlx, game->mlxs.mlx_win, game);
-
-	}
-	if (keycode == 126)
-	{
-		puts("sss");
-		char_position(game->map, 'P', cords);
-		game->map[cords->x][cords->y] = '0';
-		game->map[cords->x -1][cords->y] = 'P';
-		put_imgs_to_win(game->mlxs.mlx, game->mlxs.mlx_win, game);
-
-	}
+		game->map[cords->x + i][cords->y + j] = 'P';
+	// }
+	put_imgs_to_win(game->mlxs.mlx, game->mlxs.mlx_win, game);
 	if (keycode == 53)
 	{
 		mlx_destroy_window(game->mlxs.mlx, game->mlxs.mlx_win);
 		exit(0);
 	}
-	printf("%d\n", keycode);
 	return(1);
 }
 
