@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 10:11:20 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/03 18:10:55 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/03 21:02:31 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	put_imgs_to_win(void *mlx, void *mlx_win, t_game *g)
 
 void	player_moves(int i, int j, t_coordinates *cords, t_game *game)
 {
-	char	p;
+	static size_t	move;
+	char			p;
 
 	p = game->map[cords->x + i][cords->y + j];
 	if (p == 'C')
@@ -78,6 +79,9 @@ void	player_moves(int i, int j, t_coordinates *cords, t_game *game)
 			mlx_destroy_window(game->mlxs.mlx, game->mlxs.mlx_win);
 			exit(0);
 		}
+		move++;
+		ft_putnbr(move);
+		write(1, "\n", 1);
 		game->map[cords->x][cords->y] = '0';
 		game->map[cords->x + i][cords->y + j] = 'P';
 		put_imgs_to_win(game->mlxs.mlx, game->mlxs.mlx_win, game);

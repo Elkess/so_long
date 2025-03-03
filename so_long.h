@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 09:57:56 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/03 18:08:38 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/03 20:59:59 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ void	char_position(char **map, char c, t_coordinates *coords);
 void	flood_fill(t_game *game, int x, int y, int *c);
 void	check_map_size(t_game *game);
 int		destroy(t_game *game);
+void	ft_putnbr(size_t n);
 
 #endif

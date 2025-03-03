@@ -1,5 +1,5 @@
 NAME = so_long
-SRCS = so_long.c helper_funcs.c parsing.c parsing_utils.c \
+SRCS = so_long.c helper_funcs.c parsing.c parsing_utils.c print.c \
 		get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
 
 OBJS = $(SRCS:.c=.o)
