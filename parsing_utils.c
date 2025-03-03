@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:31:48 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/03 14:56:32 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/03 15:26:31 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	has_valid_char(t_game *game)
 		while (game->map[i][j])
 		{
 			if (game->map[i][j] == '0' || game->map[i][j] == '1'
-			|| game->map[i][j] == 'C' || game->map[i][j] == 'E' || game->map[i][j] == 'P')
+					|| game->map[i][j] == 'C' || game->map[i][j] == 'E'
+					|| game->map[i][j] == 'P')
 				chars[(int)game->map[i][j]] += 1;
 			else
 				return (0);
@@ -57,7 +58,7 @@ int	has_valid_char(t_game *game)
 		i++;
 	}
 	if (chars['C'] == 0 || chars['E'] != 1 || chars['P'] != 1)
-			return (0); 
+		return (0);
 	game->collectibles = chars['C'];
 	return (1);
 }
@@ -71,7 +72,6 @@ void	char_position(char **map, char c, t_coordinates *coords)
 	coords->y = 0;
 	i = 0;
 	j = 0;
-
 	while (map[i])
 	{
 		j = 0;
@@ -96,7 +96,7 @@ void	flood_fill(t_game *game, int x, int y, int *c)
 	{
 		if (game->map2[x][y] == 'C')
 			(*c)--;
-		game->map2[x][y] = 'a';	
+		game->map2[x][y] = 'a';
 	}
 	flood_fill(game, x +1, y, c);
 	flood_fill(game, x, y +1, c);

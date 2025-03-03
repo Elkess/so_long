@@ -6,19 +6,16 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 09:57:56 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/03 13:43:36 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/03 15:36:24 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-#include <libc.h>
 # include <mlx.h>
-# include <limits.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include <fcntl.h>
 # include "get_next_line/get_next_line.h"
 
@@ -38,15 +35,15 @@ typedef struct s_game
 {
 	t_windows	win;
 	t_mlx		mlxs;
-	char	**map2;
-	char	**map;
-	void	*p_img;
-	void	*e_img;
-	void	*c_img;
-	void	*w_img;
-	void	*s_img;
-	int		collectibles;
-	int		fd;
+	char		**map2;
+	char		**map;
+	void		*p_img;
+	void		*e_img;
+	void		*c_img;
+	void		*w_img;
+	void		*s_img;
+	int			collectibles;
+	int			fd;
 }	t_game;
 
 typedef struct s_coordinates

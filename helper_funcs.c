@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:44:22 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/03 13:45:38 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/03 15:24:07 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	size_t	i;
 
 	if (!s1)
-		return(1);
+		return (1);
 	i = 0;
 	while ((s1[i] || s2[i]) && s1[i] == s2[i])
 		i++;
