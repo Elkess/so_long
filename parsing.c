@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:28:36 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/03 14:59:05 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/03 15:57:03 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	map_dimension(char *filename, t_game *game)
 		game->win.length = 0;
 		game->win.width = 0;
 		close(game->fd);
-		print_err("Invalid Map !");
+		print_err("Map is not a rectangle !");
 	}
 	game->map = malloc((game->win.length +1) * sizeof(char *));
 	game->map2 = malloc((game->win.length +1) * sizeof(char *));
@@ -116,6 +116,6 @@ void	parsing(char *filename, t_game *game)
 		&& game->map2[coords->x -1][coords->y] != 'a'
 		&& game->map2[coords->x][coords->y -1] != 'a')
 		|| c > 0)
-		print_err("Ther is no way to get the exit or all the coins !!");
-	// check_map_size(game);
+		print_err("There is no way to get the exit or all the coins !!");
+	check_map_size(game);
 }

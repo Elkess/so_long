@@ -4,8 +4,7 @@ SRCS = so_long.c helper_funcs.c parsing.c parsing_utils.c \
 
 OBJS = $(SRCS:.c=.o)
 CC = cc
-CFLAGS = 
-# -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 # -fsanitize=address -g3
 # LIBS = -Lmlx -lmlx -lXext -lX11 -lm
 

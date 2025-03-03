@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:31:48 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/03 15:26:31 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/03 16:07:04 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ void	char_position(char **map, char c, t_coordinates *coords)
 
 void	flood_fill(t_game *game, int x, int y, int *c)
 {
-	if (game->map2[x][y] == '1' || game->map2[x][y] == 'a')
+	if (game->map2[x][y] == '1' || game->map2[x][y] == 'a'
+		|| game->map2[x][y] == 'E')
 		return ;
 	if (game->map2[x][y] == '0' || game->map2[x][y] == 'C')
 	{
@@ -104,6 +105,8 @@ void	flood_fill(t_game *game, int x, int y, int *c)
 	flood_fill(game, x, y -1, c);
 }
 
-// void	check_map_size(t_game *game)
-// {
-// }
+void	check_map_size(t_game *game)
+{
+	if (game->win.length > 22 || game->win.width > 40)
+		print_err("you exceed the boundries !!");
+}
