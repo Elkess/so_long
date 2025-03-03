@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:44:22 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/03 15:24:07 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/03 18:11:01 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,15 @@ void	print_err(char	*s)
 	write(2, "Error\n", 6);
 	write(2, s, ft_strlen(s));
 	exit(1);
+}
+
+int	destroy(t_game *game)
+{
+	mlx_destroy_image(game->mlxs.mlx, game->c_img);
+	mlx_destroy_image(game->mlxs.mlx, game->w_img);
+	mlx_destroy_image(game->mlxs.mlx, game->e_img);
+	mlx_destroy_image(game->mlxs.mlx, game->s_img);
+	mlx_destroy_image(game->mlxs.mlx, game->p_img);
+	mlx_destroy_window(game->mlxs.mlx, game->mlxs.mlx_win);
+	exit(0);
 }

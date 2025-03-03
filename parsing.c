@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:28:36 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/03 15:57:03 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/03 18:02:57 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,9 @@ static void	map_dimension(char *filename, t_game *game)
 
 void	parsing(char *filename, t_game *game)
 {
-	t_coordinates	*coords;
+	t_coordinates	coords;
 	int				c;
 
-	coords = malloc(sizeof(t_coordinates));
 	if (ft_strcmp(ft_strrchr(filename, '.'), ".ber"))
 		print_err("Map's name should have the format *.ber !");
 	if (!is_openable(filename, game))
@@ -108,13 +107,13 @@ void	parsing(char *filename, t_game *game)
 	if (!has_valid_char(game))
 		print_err("You did not respect the the 01CEP rules!");
 	c = game->collectibles;
-	char_position(game->map, 'P', coords);
-	flood_fill(game, coords->x, coords->y, &c);
-	char_position(game->map2, 'E', coords);
-	if ((game->map2[coords->x +1][coords->y] != 'a'
-		&& game->map2[coords->x][coords->y +1] != 'a'
-		&& game->map2[coords->x -1][coords->y] != 'a'
-		&& game->map2[coords->x][coords->y -1] != 'a')
+	char_position(game->map, 'P', &coords);
+	flood_fill(game, (&coords)->x, (&coords)->y, &c);
+	char_position(game->map2, 'E', &coords);
+	if ((game->map2[(&coords)->x +1][(&coords)->y] != 'a'
+		&& game->map2[(&coords)->x][(&coords)->y +1] != 'a'
+		&& game->map2[(&coords)->x -1][(&coords)->y] != 'a'
+		&& game->map2[(&coords)->x][(&coords)->y -1] != 'a')
 		|| c > 0)
 		print_err("There is no way to get the exit or all the coins !!");
 	check_map_size(game);

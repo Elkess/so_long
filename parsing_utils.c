@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:31:48 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/03 16:07:04 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/03 17:55:33 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,20 @@ void	fill_map(char *filename, t_game *game)
 	size_t	len;
 	char	*holder;
 
+	holder = NULL;
 	game->fd = open(filename, O_RDONLY);
 	i = 0;
 	len = game->win.length;
 	while (len)
 	{
+		free(holder);
 		holder = get_next_line(game->fd);
 		game->map[i] = ft_substr(holder, 0, game->win.width);
 		game->map2[i] = ft_substr(holder, 0, game->win.width);
 		i++;
 		len--;
 	}
+	free(holder);
 	game->map[i] = NULL;
 	game->map2[i] = NULL;
 	close(game->fd);
