@@ -1,12 +1,12 @@
 NAME = so_long
-SRCS = so_long.c ft_strcmp.c ft_strrchr.c \
+SRCS = so_long.c helper_funcs.c parsing.c parsing_utils.c \
 		get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
-		ft_bzero.c
 
 OBJS = $(SRCS:.c=.o)
 CC = cc
 CFLAGS = 
-#-fsanitize=address -g3
+# -Wall -Wextra -Werror
+# -fsanitize=address -g3
 # LIBS = -Lmlx -lmlx -lXext -lX11 -lm
 
 all: $(NAME)
