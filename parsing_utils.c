@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:31:48 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/06 13:37:58 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/06 21:15:37 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int	has_valid_char(t_game *game)
 
 void	char_position(char **map, char c, t_coordinates *coords)
 {
-	size_t			i;
-	size_t			j;
+	size_t	i;
+	size_t	j;
 
 	coords->x = 0;
 	coords->y = 0;

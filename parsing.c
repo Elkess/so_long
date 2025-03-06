@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:28:36 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/06 14:16:37 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/06 21:17:23 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,6 @@ static void	map_dimension(t_game *game)
 	game->map2 = malloc((game->win.length +1) * sizeof(char *));
 	if (!game->map2 || !game->map)
 		print_err("Map allocation failed !!", game, 1);
-	game->map2[0] = NULL;
-	game->map[0] = NULL;
 }
 
 void	parsing(char *filename, t_game *game)

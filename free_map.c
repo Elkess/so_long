@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 14:03:43 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/06 14:15:03 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/06 20:58:08 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_map(char **map)
 	size_t	i;
 
 	i = 0;
-	while (map[i])
+	while (map && map[i])
 		free(map[i++]);
 	free(map);
 }

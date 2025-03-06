@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 10:11:20 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/06 14:21:26 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/06 19:26:49 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,17 @@ int	main(int ac, char **av)
 	if (ac == 2 && av[1][0])
 	{
 		parsing(av[1], &game);
-		(&game)->mlxs.mlx = mlx_init();
-		(&game)->mlxs.mlx_win = mlx_new_window((&game)->mlxs.mlx,
-				(&game)->win.width * 64, (&game)->win.length * 64, "so_long");
-		put_imgs_to_win((&game)->mlxs.mlx, (&game)->mlxs.mlx_win, (&game));
-		mlx_key_hook((&game)->mlxs.mlx_win, key_press, &game);
-		mlx_hook((&game)->mlxs.mlx_win, 17, 0, destroy, &game);
-		mlx_loop((&game)->mlxs.mlx);
+		game.mlxs.mlx = mlx_init();
+		if (game.mlxs.mlx == NULL)
+			print_err("Failed to establish a mlx connex !!", &game, 1);
+		game.mlxs.mlx_win = mlx_new_window(game.mlxs.mlx,
+				game.win.width * 64, game.win.length * 64, "so_long");
+		if (game.mlxs.mlx_win == NULL)
+			print_err("Failed to create the window !!", &game, 1);
+		put_imgs_to_win(game.mlxs.mlx, game.mlxs.mlx_win, &game);
+		mlx_key_hook(game.mlxs.mlx_win, key_press, &game);
+		mlx_hook(game.mlxs.mlx_win, 17, 0, destroy, &game);
+		mlx_loop(game.mlxs.mlx);
 	}
 	else
 		exit(1);
