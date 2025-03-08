@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:28:36 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/06 21:17:23 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/08 15:25:34 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,12 @@ void	parsing(char *filename, t_game *game)
 		print_err("You did not respect the the 01CEP rules!", game, 1);
 	c = game->collectibles;
 	char_position(game->map, 'P', &coords);
-	flood_fill(game, (&coords)->x, (&coords)->y, &c);
+	flood_fill(game, coords.x, coords.y, &c);
 	char_position(game->map2, 'E', &coords);
-	if ((game->map2[(&coords)->x +1][(&coords)->y] != 'a'
-		&& game->map2[(&coords)->x][(&coords)->y +1] != 'a'
-		&& game->map2[(&coords)->x -1][(&coords)->y] != 'a'
-		&& game->map2[(&coords)->x][(&coords)->y -1] != 'a')
+	if ((game->map2[coords.x +1][coords.y] != 'a'
+		&& game->map2[coords.x][coords.y +1] != 'a'
+		&& game->map2[coords.x -1][coords.y] != 'a'
+		&& game->map2[coords.x][coords.y -1] != 'a')
 		|| c > 0)
 		print_err("There isn't a way for all the coins or the exit !", game, 1);
 	check_map_size(game);

@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 10:11:20 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/06 19:26:49 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/08 17:06:39 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	fill_imgs(t_game *game, void *mlx)
 
 void	put_imgs_to_win(void *mlx, void *mlx_win, t_game *g)
 {
-	size_t			i;
-	size_t			j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;
@@ -60,12 +60,12 @@ void	put_imgs_to_win(void *mlx, void *mlx_win, t_game *g)
 	}
 }
 
-void	player_moves(int i, int j, t_coordinates *cords, t_game *game)
+void	player_moves(int i, int j, t_coordinates cords, t_game *game)
 {
 	static size_t	move;
 	char			p;
 
-	p = game->map[cords->x + i][cords->y + j];
+	p = game->map[cords.x + i][cords.y + j];
 	if (p == 'C')
 		game->collectibles--;
 	if ((p != '1' && p != 'E') || (p == 'E' && !game->collectibles))
@@ -78,8 +78,8 @@ void	player_moves(int i, int j, t_coordinates *cords, t_game *game)
 			write(1, "You Win, Congrats !!!!!\n", 24);
 			destroy(game);
 		}
-		game->map[cords->x][cords->y] = '0';
-		game->map[cords->x + i][cords->y + j] = 'P';
+		game->map[cords.x][cords.y] = '0';
+		game->map[cords.x + i][cords.y + j] = 'P';
 		put_imgs_to_win(game->mlxs.mlx, game->mlxs.mlx_win, game);
 	}
 }
@@ -97,7 +97,7 @@ int	key_press(int keycode, t_game *game)
 	char_position(game->map, 'P', &cords);
 	j = (keycode == 124) * 1 + (keycode == 123) * -1;
 	i = (keycode == 125) * 1 + (keycode == 126) * -1;
-	player_moves(i, j, &cords, game);
+	player_moves(i, j, cords, game);
 	return (1);
 }
 

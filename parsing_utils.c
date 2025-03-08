@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:31:48 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/06 21:15:37 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/08 15:18:54 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	has_valid_char(t_game *game)
 	size_t	j;
 	int		chars[256];
 
-	ft_bzero(chars, 256);
+	ft_bzero(chars, 256 * sizeof(int));
 	i = 1;
 	while (game->map[i])
 	{
