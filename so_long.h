@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 09:57:56 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/08 17:04:14 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/09 15:34:11 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,27 @@ typedef struct s_mlx
 	void	*mlx_win;
 }	t_mlx;
 
-typedef struct s_game
-{
-	t_windows	win;
-	t_mlx		mlxs;
-	char		**map2;
-	char		**map;
-	void		*p_img;
-	void		*e_img;
-	void		*c_img;
-	void		*w_img;
-	void		*s_img;
-	int			collectibles;
-	int			fd;
-}	t_game;
-
 typedef struct s_coordinates
 {
 	int	x;
 	int	y;
 }	t_coordinates;
+
+typedef struct s_game
+{
+	t_windows		win;
+	t_mlx			mlxs;
+	char			**map2;
+	char			**map;
+	t_coordinates	e_cords;
+	void			*p_img;
+	void			*e_img;
+	void			*c_img;
+	void			*w_img;
+	void			*s_img;
+	int				collectibles;
+	int				fd;
+}	t_game;
 
 char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);

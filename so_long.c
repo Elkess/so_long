@@ -6,32 +6,32 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 10:11:20 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/08 17:06:39 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/09 15:36:56 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	fill_imgs(t_game *game, void *mlx)
+static void	fill_imgs(t_game *game, void *mlx)
 {
 	t_coordinates	coords;
 
-	game->w_img = mlx_xpm_file_to_image(mlx, "imgs/wall.xpm",
+	game->w_img = mlx_xpm_file_to_image(mlx, "textures/wall.xpm",
 			&coords.x, &coords.y);
-	game->c_img = mlx_xpm_file_to_image(mlx, "imgs/ball.xpm",
+	game->c_img = mlx_xpm_file_to_image(mlx, "textures/ball.xpm",
 			&coords.x, &coords.y);
-	game->e_img = mlx_xpm_file_to_image(mlx, "imgs/blackhole.xpm",
+	game->e_img = mlx_xpm_file_to_image(mlx, "textures/blackhole.xpm",
 			&coords.x, &coords.y);
-	game->p_img = mlx_xpm_file_to_image(mlx, "imgs/player.xpm",
+	game->p_img = mlx_xpm_file_to_image(mlx, "textures/player.xpm",
 			&coords.x, &coords.y);
-	game->s_img = mlx_xpm_file_to_image(mlx, "imgs/espace.xpm",
+	game->s_img = mlx_xpm_file_to_image(mlx, "textures/espace.xpm",
 			&coords.x, &coords.y);
 	if (!game->c_img || !game->w_img || !game->e_img
 		|| !game->p_img || !game->s_img)
 		print_err("Failed to load imgs !!", game, 1);
 }
 
-void	put_imgs_to_win(void *mlx, void *mlx_win, t_game *g)
+static void	put_imgs_to_win(void *mlx, void *mlx_win, t_game *g)
 {
 	size_t	i;
 	size_t	j;
@@ -60,31 +60,35 @@ void	put_imgs_to_win(void *mlx, void *mlx_win, t_game *g)
 	}
 }
 
-void	player_moves(int i, int j, t_coordinates cords, t_game *game)
+static void	player_moves(int i, int j, t_coordinates cords, t_game *game)
 {
+	static int		e_trace;
 	static size_t	move;
 	char			p;
 
 	p = game->map[cords.x + i][cords.y + j];
 	if (p == 'C')
 		game->collectibles--;
-	if ((p != '1' && p != 'E') || (p == 'E' && !game->collectibles))
+	if (p != '1')
 	{
 		move++;
-		ft_putnbr(move);
-		write(1, "\n", 1);
-		if (p == 'E')
-		{
-			write(1, "You Win, Congrats !!!!!\n", 24);
-			destroy(game);
-		}
+		(ft_putnbr(move), write(1, "\n", 1));
+		if (p == 'E' && !game->collectibles)
+			(write(1, "You Win, Congrats !!!!!\n", 24), destroy(game));
 		game->map[cords.x][cords.y] = '0';
+		if (e_trace)
+		{
+			game->map[game->e_cords.x][game->e_cords.y] = 'E';
+			e_trace = 0;
+		}
+		if (p == 'E')
+			e_trace = 1;
 		game->map[cords.x + i][cords.y + j] = 'P';
 		put_imgs_to_win(game->mlxs.mlx, game->mlxs.mlx_win, game);
 	}
 }
 
-int	key_press(int keycode, t_game *game)
+static int	key_press(int keycode, t_game *game)
 {
 	t_coordinates	cords;
 	int				i;
@@ -115,6 +119,7 @@ int	main(int ac, char **av)
 				game.win.width * 64, game.win.length * 64, "so_long");
 		if (game.mlxs.mlx_win == NULL)
 			print_err("Failed to create the window !!", &game, 1);
+		char_position(game.map, 'E', &(game.e_cords));
 		put_imgs_to_win(game.mlxs.mlx, game.mlxs.mlx_win, &game);
 		mlx_key_hook(game.mlxs.mlx_win, key_press, &game);
 		mlx_hook(game.mlxs.mlx_win, 17, 0, destroy, &game);
