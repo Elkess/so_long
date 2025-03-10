@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 10:11:20 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/09 15:36:56 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/10 10:37:26 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ static void	fill_imgs(t_game *game, void *mlx)
 			&coords.x, &coords.y);
 	if (!game->c_img || !game->w_img || !game->e_img
 		|| !game->p_img || !game->s_img)
-		print_err("Failed to load imgs !!", game, 1);
+	{
+		destroyer(game);
+		print_err("Failed to load imgs !!", game, 0);
+	}
 }
 
 static void	put_imgs_to_win(void *mlx, void *mlx_win, t_game *g)
@@ -73,8 +76,6 @@ static void	player_moves(int i, int j, t_coordinates cords, t_game *game)
 	{
 		move++;
 		(ft_putnbr(move), write(1, "\n", 1));
-		if (p == 'E' && !game->collectibles)
-			(write(1, "You Win, Congrats !!!!!\n", 24), destroy(game));
 		game->map[cords.x][cords.y] = '0';
 		if (e_trace)
 		{
@@ -85,6 +86,8 @@ static void	player_moves(int i, int j, t_coordinates cords, t_game *game)
 			e_trace = 1;
 		game->map[cords.x + i][cords.y + j] = 'P';
 		put_imgs_to_win(game->mlxs.mlx, game->mlxs.mlx_win, game);
+		if (p == 'E' && !game->collectibles)
+			(write(1, "You Win, Congrats !!!!!\n", 24), destroy(game));
 	}
 }
 
@@ -98,11 +101,14 @@ static int	key_press(int keycode, t_game *game)
 	j = 0;
 	if (keycode == 53)
 		destroy(game);
+	if (keycode != 123 && keycode != 124
+		&& keycode != 125 && keycode != 126)
+		return (1);
 	char_position(game->map, 'P', &cords);
 	j = (keycode == 124) * 1 + (keycode == 123) * -1;
 	i = (keycode == 125) * 1 + (keycode == 126) * -1;
 	player_moves(i, j, cords, game);
-	return (1);
+	return (0);
 }
 
 int	main(int ac, char **av)

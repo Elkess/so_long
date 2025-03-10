@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 20:57:25 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/03 20:59:48 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/10 09:55:45 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	ft_putchar(char c)
 
 void	ft_putnbr(size_t n)
 {
-	size_t	arr[10];
+	size_t	arr[20];
 	size_t	i;
 
 	i = 0;

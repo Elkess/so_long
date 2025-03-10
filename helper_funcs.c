@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:44:22 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/08 17:02:52 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/10 09:39:20 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,6 @@ void	print_err(char	*s, t_game *game, int flag)
 
 int	destroy(t_game *game)
 {
-	free_map(game->map);
-	free_map(game->map2);
-	mlx_destroy_image(game->mlxs.mlx, game->c_img);
-	mlx_destroy_image(game->mlxs.mlx, game->w_img);
-	mlx_destroy_image(game->mlxs.mlx, game->e_img);
-	mlx_destroy_image(game->mlxs.mlx, game->s_img);
-	mlx_destroy_image(game->mlxs.mlx, game->p_img);
-	mlx_destroy_window(game->mlxs.mlx, game->mlxs.mlx_win);
+	destroyer(game);
 	exit(0);
 }
