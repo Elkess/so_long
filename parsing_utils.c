@@ -6,16 +6,15 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:31:48 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/08 15:18:54 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/12 15:34:33 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	fill_map(char *filename, t_game *game)
+void	fill_map(char *filename, t_game *game, size_t len)
 {
 	size_t	i;
-	size_t	len;
 	char	*holder;
 
 	holder = NULL;
@@ -23,20 +22,23 @@ void	fill_map(char *filename, t_game *game)
 	if (game->fd < 0)
 		print_err("Failed to open the file !!", game, 1);
 	i = 0;
-	len = game->win.length;
 	while (len)
 	{
-		free(holder);
-		holder = get_next_line(game->fd);
+		(free(holder), holder = get_next_line(game->fd));
 		game->map[i] = ft_substr(holder, 0, game->win.width);
 		game->map2[i] = ft_substr(holder, 0, game->win.width);
+		if (!game->map[i] || !game->map2[i])
+		{
+			game->map[++i] = NULL;
+			game->map2[i] = NULL;
+			(free(holder), print_err("Map filling failed !!", game, 1));
+		}
 		i++;
 		len--;
 	}
-	free(holder);
 	game->map[i] = NULL;
 	game->map2[i] = NULL;
-	close(game->fd);
+	(free(holder), close(game->fd));
 }
 
 int	has_valid_char(t_game *game)
@@ -93,25 +95,19 @@ void	char_position(char **map, char c, t_coordinates *coords)
 	}
 }
 
-void	flood_fill(t_game *game, int x, int y, int *c)
+void	flood_fill(t_game *game, int x, int y, int *traces)
 {
-	if (game->map2[x][y] == '1' || game->map2[x][y] == 'a'
-		|| game->map2[x][y] == 'E')
+	if (game->map2[x][y] == '1' || game->map2[x][y] == 'a')
 		return ;
-	if (game->map2[x][y] == '0' || game->map2[x][y] == 'C')
+	if (game->map2[x][y] == '0' || game->map2[x][y] == 'C'
+		|| game->map2[x][y] == 'E')
 	{
-		if (game->map2[x][y] == 'C')
-			(*c)--;
+		if (game->map2[x][y] == 'C' || game->map2[x][y] == 'E')
+			(*traces)--;
 		game->map2[x][y] = 'a';
 	}
-	flood_fill(game, x +1, y, c);
-	flood_fill(game, x, y +1, c);
-	flood_fill(game, x -1, y, c);
-	flood_fill(game, x, y -1, c);
-}
-
-void	check_map_size(t_game *game)
-{
-	if (game->win.length > 22 || game->win.width > 40)
-		print_err("you have exceeded the boundries !!", game, 1);
+	flood_fill(game, x +1, y, traces);
+	flood_fill(game, x, y +1, traces);
+	flood_fill(game, x -1, y, traces);
+	flood_fill(game, x, y -1, traces);
 }

@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 10:11:20 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/10 10:37:26 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/12 15:05:26 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ static void	player_moves(int i, int j, t_coordinates cords, t_game *game)
 {
 	static int		e_trace;
 	static size_t	move;
-	char			p;
+	char			next_move;
 
-	p = game->map[cords.x + i][cords.y + j];
-	if (p == 'C')
+	next_move = game->map[cords.x + i][cords.y + j];
+	if (next_move == 'C')
 		game->collectibles--;
-	if (p != '1')
+	if (next_move != '1')
 	{
 		move++;
 		(ft_putnbr(move), write(1, "\n", 1));
@@ -82,11 +82,11 @@ static void	player_moves(int i, int j, t_coordinates cords, t_game *game)
 			game->map[game->e_cords.x][game->e_cords.y] = 'E';
 			e_trace = 0;
 		}
-		if (p == 'E')
+		if (next_move == 'E')
 			e_trace = 1;
 		game->map[cords.x + i][cords.y + j] = 'P';
 		put_imgs_to_win(game->mlxs.mlx, game->mlxs.mlx_win, game);
-		if (p == 'E' && !game->collectibles)
+		if (next_move == 'E' && !game->collectibles)
 			(write(1, "You Win, Congrats !!!!!\n", 24), destroy(game));
 	}
 }

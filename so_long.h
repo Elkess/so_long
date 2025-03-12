@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 09:57:56 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/10 10:37:36 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/12 15:27:09 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,10 @@ char	*ft_strrchr(const char *s, int c);
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_bzero(void *s, size_t n);
 void	parsing(char *filename, t_game *game);
-void	fill_map(char *filename, t_game *game);
+void	fill_map(char *filename, t_game *game, size_t len);
 int		has_valid_char(t_game *game);
 void	char_position(char **map, char c, t_coordinates *coords);
 void	flood_fill(t_game *game, int x, int y, int *c);
-void	check_map_size(t_game *game);
 int		destroy(t_game *game);
 void	destroyer(t_game *game);
 void	ft_putnbr(size_t n);

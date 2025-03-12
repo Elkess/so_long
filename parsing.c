@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:28:36 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/08 15:25:34 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/12 15:26:45 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ static void	map_dimension_helper(char *line, size_t *lenstr, t_game *game)
 			break ;
 		*lenstr = ft_strlen(line) - (line[ft_strlen(line) - 1] == '\n');
 		game->win.length++;
+		if (game->win.length > 22)
+		{
+			free(line);
+			print_err("you have exceeded the boundries !!", game, 0);
+		}
 		if (game->win.width != *lenstr)
 			break ;
 	}
@@ -74,12 +79,14 @@ static void	map_dimension(t_game *game)
 
 	lenstr = 0;
 	line = get_next_line(game->fd);
-	if (!line || !*line)
+	if (!line)
 	{
 		close(game->fd);
 		print_err("Empty Map !!", game, 0);
 	}
 	game->win.width = ft_strlen(line) - (line[ft_strlen(line) -1] == '\n');
+	if (game->win.width > 40)
+		(free(line), print_err("you have exceeded the boundries !!", game, 0));
 	game->win.length = 1;
 	map_dimension_helper(line, &lenstr, game);
 	if (game->win.width != lenstr)
@@ -97,27 +104,21 @@ static void	map_dimension(t_game *game)
 void	parsing(char *filename, t_game *game)
 {
 	t_coordinates	coords;
-	int				c;
+	int				traces;
 
 	if (ft_strcmp(ft_strrchr(filename, '.'), ".ber"))
 		print_err("Map's name should have the format *.ber !", game, 0);
 	if (!is_openable(filename, game))
 		print_err("Failed to open the file !", game, 0);
 	map_dimension(game);
-	fill_map(filename, game);
+	fill_map(filename, game, game->win.length);
 	if (!is_surrounded_by_walls(game))
 		print_err("The map is not surrounded by walls!", game, 1);
 	if (!has_valid_char(game))
 		print_err("You did not respect the the 01CEP rules!", game, 1);
-	c = game->collectibles;
+	traces = game->collectibles +1;
 	char_position(game->map, 'P', &coords);
-	flood_fill(game, coords.x, coords.y, &c);
-	char_position(game->map2, 'E', &coords);
-	if ((game->map2[coords.x +1][coords.y] != 'a'
-		&& game->map2[coords.x][coords.y +1] != 'a'
-		&& game->map2[coords.x -1][coords.y] != 'a'
-		&& game->map2[coords.x][coords.y -1] != 'a')
-		|| c > 0)
+	flood_fill(game, coords.x, coords.y, &traces);
+	if (traces > 0)
 		print_err("There isn't a way for all the coins or the exit !", game, 1);
-	check_map_size(game);
 }
