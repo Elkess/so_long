@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:44:22 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/10 09:39:20 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/12 17:57:38 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,15 @@ void	print_err(char	*s, t_game *game, int flag)
 	i = 0;
 	write(2, "Error\n", 6);
 	write(2, s, ft_strlen(s));
+	write(2, "\n", 1);
+	close(game->fd);
 	if (flag)
 	{
 		while ((game->map2 && game->map2[i]) || (game->map && game->map[i]))
 		{
-			if (game->map)
+			if (game->map && game->map[i])
 				free(game->map[i]);
-			if (game->map2)
+			if (game->map2 && game->map2[i])
 				free(game->map2[i]);
 			i++;
 		}

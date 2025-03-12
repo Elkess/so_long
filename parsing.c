@@ -6,7 +6,7 @@
 /*   By: melkess <melkess@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:28:36 by melkess           #+#    #+#             */
-/*   Updated: 2025/03/12 15:26:45 by melkess          ###   ########.fr       */
+/*   Updated: 2025/03/12 17:13:32 by melkess          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,7 @@ static void	map_dimension(t_game *game)
 	lenstr = 0;
 	line = get_next_line(game->fd);
 	if (!line)
-	{
-		close(game->fd);
 		print_err("Empty Map !!", game, 0);
-	}
 	game->win.width = ft_strlen(line) - (line[ft_strlen(line) -1] == '\n');
 	if (game->win.width > 40)
 		(free(line), print_err("you have exceeded the boundries !!", game, 0));
