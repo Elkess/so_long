@@ -91,12 +91,14 @@ static void	player_moves(int i, int j, t_coordinates cords, t_game *game)
 	}
 }
 
-static int	key_press(int keycode, t_game *game)
+static int	key_press(int keycode, void *param)
 {
 	t_coordinates	cords;
+	t_game			*game;
 	int				i;
 	int				j;
 
+	game = param;
 	i = 0;
 	j = 0;
 	if (keycode == 53)
@@ -108,6 +110,13 @@ static int	key_press(int keycode, t_game *game)
 	j = (keycode == 124) * 1 + (keycode == 123) * -1;
 	i = (keycode == 125) * 1 + (keycode == 126) * -1;
 	player_moves(i, j, cords, game);
+	return (0);
+}
+
+static int	close_window(int event, void *param)
+{
+	(void)event;
+	destroy(param);
 	return (0);
 }
 
@@ -128,7 +137,7 @@ int	main(int ac, char **av)
 		char_position(game.map, 'E', &(game.e_cords));
 		put_imgs_to_win(game.mlxs.mlx, game.mlxs.mlx_win, &game);
 		mlx_key_hook(game.mlxs.mlx_win, key_press, &game);
-		mlx_hook(game.mlxs.mlx_win, 17, 0, destroy, &game);
+		mlx_hook(game.mlxs.mlx_win, 17, 0, close_window, &game);
 		mlx_loop(game.mlxs.mlx);
 	}
 	else
