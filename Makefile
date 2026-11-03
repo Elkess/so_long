@@ -21,7 +21,7 @@ $(MLX):
 
 clean:
 	@rm -f $(OBJS)
-	@$(MAKE) -C mlx clean
+	@if [ -f mlx/Makefile.gen ]; then $(MAKE) -C mlx clean; fi
 
 fclean: clean
 	@rm -f $(NAME)

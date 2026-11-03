@@ -101,14 +101,17 @@ static int	key_press(int keycode, void *param)
 	game = param;
 	i = 0;
 	j = 0;
-	if (keycode == 53)
+	if (keycode == 53 || keycode == 65307)
 		destroy(game);
-	if (keycode != 123 && keycode != 124
-		&& keycode != 125 && keycode != 126)
+	if (keycode != 123 && keycode != 124 && keycode != 125 && keycode != 126
+		&& keycode != 65361 && keycode != 65362
+		&& keycode != 65363 && keycode != 65364)
 		return (1);
 	char_position(game->map, 'P', &cords);
-	j = (keycode == 124) * 1 + (keycode == 123) * -1;
-	i = (keycode == 125) * 1 + (keycode == 126) * -1;
+	j = (keycode == 124 || keycode == 65363) * 1
+		+ (keycode == 123 || keycode == 65361) * -1;
+	i = (keycode == 125 || keycode == 65364) * 1
+		+ (keycode == 126 || keycode == 65362) * -1;
 	player_moves(i, j, cords, game);
 	return (0);
 }
